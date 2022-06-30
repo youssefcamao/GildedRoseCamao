@@ -25,9 +25,13 @@ namespace GildedRose.Abstractions
             }
             set
             {
-                if (value < MaxQuality && value > 0)
+                if (value <= MaxQuality && value >= 0)
                 {
                     Item.Quality = value;
+                }
+                else
+                {
+                    Item.Quality = 0;
                 }
             }
         }
