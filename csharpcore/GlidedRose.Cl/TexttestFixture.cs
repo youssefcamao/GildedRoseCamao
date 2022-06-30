@@ -4,7 +4,7 @@ using gr = GildedRoseKata;
 using System;
 using System.Collections.Generic;
 
-namespace GildedRoseTests
+namespace GlidedRose.Cl
 {
     public static class TexttestFixture
     {
