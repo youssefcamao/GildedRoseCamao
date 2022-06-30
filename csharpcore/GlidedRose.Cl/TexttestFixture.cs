@@ -3,6 +3,8 @@ using GildedRoseKata;
 using gr = GildedRoseKata;
 using System;
 using System.Collections.Generic;
+using GildedRose.Abstractions;
+using GildedRose.QualityManagers;
 
 namespace GlidedRose.Cl
 {
@@ -12,6 +14,14 @@ namespace GlidedRose.Cl
         {
             Console.WriteLine("OMGHAI!");
 
+            Dictionary<string, Func<Item, IQualityManager>> qualityItemsDefinition = new Dictionary<string, Func<Item, IQualityManager>>();
+            qualityItemsDefinition.Add("Aged Brie", (x) => new AgedBrieQualityManager(x));
+            qualityItemsDefinition.Add("+5 Dexterity Vest", (x) => new StandardQuallityManager(x));
+            qualityItemsDefinition.Add("Sulfuras, Hand of Ragnaros", (x) => new SulfurasQualityManager(x));
+            qualityItemsDefinition.Add("Backstage passes to a TAFKAL80ETC concert", (x) => new BackStageQualityManager(x));
+            qualityItemsDefinition.Add("Elixir of the Mongoose", (x) => new StandardQuallityManager(x));
+            qualityItemsDefinition.Add("Conjured Mana Cake", (x) => new ConjuredQualityManager(x));
+            
             IList<Item> Items = new List<Item>{
                 new Item {Name = "+5 Dexterity Vest", SellIn = 10, Quality = 20},
                 new Item {Name = "Aged Brie", SellIn = 2, Quality = 0},
@@ -40,7 +50,7 @@ namespace GlidedRose.Cl
                 new Item {Name = "Conjured Mana Cake", SellIn = 3, Quality = 6}
             };
 
-            var app = new gr.GildedRose(Items);
+            var app = new gr.GildedRose(Items, qualityItemsDefinition);
 
             int days = 30;
             if (args.Length > 0)

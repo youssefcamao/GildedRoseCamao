@@ -30,7 +30,7 @@ namespace GildedRose.QualityManagers
             }
             else
             {
-                Quality = 0;
+                Item.Quality = 0;
             }
             UpdateWithQualityMarging();
         }
