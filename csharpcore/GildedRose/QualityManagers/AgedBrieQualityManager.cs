@@ -24,7 +24,7 @@ namespace GildedRose.QualityManagers
             {
                 UpdateQualityMargin = 2;
             }
-            UpdateWithQualityMarging();
+            UpdateWithMargings();
         }
     }
 }

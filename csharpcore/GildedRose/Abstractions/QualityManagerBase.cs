@@ -36,7 +36,7 @@ namespace GildedRose.Abstractions
             }
         }
         public abstract void UpdateQuality();
-        protected void UpdateWithQualityMarging()
+        protected void UpdateWithMargings()
         {
             Quality += UpdateQualityMargin;
             Item.SellIn -= UpdateSellInMargin;

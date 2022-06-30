@@ -17,7 +17,7 @@ namespace GildedRose.QualityManagers
         protected override int UpdateSellInMargin { get; set; } = 0;
         public override void UpdateQuality()
         {
-            UpdateWithQualityMarging();
+            UpdateWithMargings();
         }
     }
 }
