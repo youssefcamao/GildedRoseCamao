@@ -46,7 +46,7 @@ namespace GlidedRose.Cl
                     SellIn = 5,
                     Quality = 49
                 },
-                // this conjured item does not work properly yet
+                // this conjured item is now implemented
                 new Item {Name = "Conjured Mana Cake", SellIn = 3, Quality = 6}
             };
 
