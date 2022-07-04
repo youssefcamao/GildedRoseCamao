@@ -10,24 +10,24 @@ namespace GildedRoseTests
 {
     public class GildedRoseTest
     {
-        private readonly Dictionary<string, Func<Item, IQualityManager>> _qualityItemsDefinition = new Dictionary<string, Func<Item, IQualityManager>>();
+        private readonly Dictionary<string, IQualityManager> _qualityItemsDefinition = new Dictionary<string, IQualityManager>();
         public GildedRoseTest()
         {
             InitializeQualityItemsDefinition();
         }
         private void InitializeQualityItemsDefinition()
         {
-            _qualityItemsDefinition.Add("Aged Brie", (x) => new AgedBrieQualityManager(x));
-            _qualityItemsDefinition.Add("+5 Dexterity Vest", (x) => new StandardQuallityManager(x));
-            _qualityItemsDefinition.Add("Sulfuras, Hand of Ragnaros", (x) => new SulfurasQualityManager(x));
-            _qualityItemsDefinition.Add("Backstage passes to a TAFKAL80ETC concert", (x) => new BackStageQualityManager(x));
-            _qualityItemsDefinition.Add("Conjured Mana Cake", (x) => new ConjuredQualityManager(x));
+            _qualityItemsDefinition.Add("Aged Brie", new AgedBrieQualityManager());
+            _qualityItemsDefinition.Add("+5 Dexterity Vest", new StandardQuallityManager());
+            _qualityItemsDefinition.Add("Sulfuras, Hand of Ragnaros", new SulfurasQualityManager());
+            _qualityItemsDefinition.Add("Backstage passes to a TAFKAL80ETC concert", new BackStageQualityManager());
+            _qualityItemsDefinition.Add("Conjured Mana Cake", new ConjuredQualityManager());
         }
         [Fact]
         public void GildedRose_QualityNotNegative_Successful()
         {
             IList<Item> Items = new List<Item> { new Item {Name = "+5 Dexterity Vest", SellIn = 10, Quality = 0}};
-            var app = new gr.GildedRose(Items, _qualityItemsDefinition);
+            var app = new gr.GildedRose(Items, _qualityItemsDefinition, new StandardQuallityManager());
             app.UpdateQuality();
             Assert.Equal(0, Items[0].Quality);
         }
@@ -35,7 +35,7 @@ namespace GildedRoseTests
         public void GildedRose_QualityMax50_NormalCase_Successful()
         {
             IList<Item> Items = new List<Item> { new Item { Name = "Aged Brie", SellIn = 2, Quality = 50 } };
-            var app = new gr.GildedRose(Items, _qualityItemsDefinition);
+            var app = new gr.GildedRose(Items, _qualityItemsDefinition, new StandardQuallityManager());
             app.UpdateQuality();
             Assert.Equal(50, Items[0].Quality);
         }
@@ -43,7 +43,7 @@ namespace GildedRoseTests
         public void GildedRose_AgedBrie_Increase_Successful()
         {
             IList<Item> Items = new List<Item> { new Item { Name = "Aged Brie", SellIn = 2, Quality = 20 } };
-            var app = new gr.GildedRose(Items, _qualityItemsDefinition);
+            var app = new gr.GildedRose(Items, _qualityItemsDefinition, new StandardQuallityManager());
             app.UpdateQuality();
             Assert.Equal(1, Items[0].SellIn);
             Assert.Equal(21, Items[0].Quality);
@@ -52,7 +52,7 @@ namespace GildedRoseTests
         public void GildedRose_NormalCase_Decrease_Successful()
         {
             IList<Item> Items = new List<Item> {new Item { Name = "+5 Dexterity Vest", SellIn = 10, Quality = 12 }};
-            var app = new gr.GildedRose(Items, _qualityItemsDefinition);
+            var app = new gr.GildedRose(Items, _qualityItemsDefinition, new StandardQuallityManager());
             app.UpdateQuality();
             Assert.Equal(9, Items[0].SellIn);
             Assert.Equal(11, Items[0].Quality);
@@ -61,7 +61,7 @@ namespace GildedRoseTests
         public void GildedRose_NormalCaseIfSealInExpired_DoubleDecrease_Successful()
         {
             IList<Item> Items = new List<Item> { new Item { Name = "+5 Dexterity Vest", SellIn = -1, Quality = 12 } };
-            var app = new gr.GildedRose(Items, _qualityItemsDefinition);
+            var app = new gr.GildedRose(Items, _qualityItemsDefinition, new StandardQuallityManager());
             app.UpdateQuality();
             Assert.Equal(10, Items[0].Quality);
             Assert.Equal(-2, Items[0].SellIn);
@@ -71,7 +71,7 @@ namespace GildedRoseTests
         {
             IList<Item> Items = new List<Item> { new Item { Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80 },
                 new Item { Name = "Sulfuras, Hand of Ragnaros", SellIn = -1, Quality = 80 } };
-            var app = new gr.GildedRose(Items, _qualityItemsDefinition);
+            var app = new gr.GildedRose(Items, _qualityItemsDefinition, new StandardQuallityManager());
             app.UpdateQuality();
             Assert.Equal(80, Items[0].Quality);
             Assert.Equal(0, Items[0].SellIn);
@@ -106,7 +106,7 @@ namespace GildedRoseTests
                     SellIn = 0,
                     Quality = 22
                 }};
-            var app = new gr.GildedRose(Items, _qualityItemsDefinition);
+            var app = new gr.GildedRose(Items, _qualityItemsDefinition, new StandardQuallityManager());
             app.UpdateQuality();
             // Normal Increase
             Assert.Equal(21, Items[0].Quality);
@@ -128,7 +128,7 @@ namespace GildedRoseTests
         public void GildedRose_Conjured_DoubleDecrease_Successful()
         {
             IList<Item> Items = new List<Item> { new Item { Name = "Conjured Mana Cake", SellIn = 3, Quality = 6 } };
-            var app = new gr.GildedRose(Items, _qualityItemsDefinition);
+            var app = new gr.GildedRose(Items, _qualityItemsDefinition, new StandardQuallityManager());
             app.UpdateQuality();
             Assert.Equal(2, Items[0].SellIn);
             Assert.Equal(4, Items[0].Quality);

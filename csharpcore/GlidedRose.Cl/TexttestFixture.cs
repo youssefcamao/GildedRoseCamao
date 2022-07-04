@@ -13,14 +13,12 @@ namespace GlidedRose.Cl
         public static void Main(string[] args)
         {
             Console.WriteLine("OMGHAI!");
-
-            Dictionary<string, Func<Item, IQualityManager>> qualityItemsDefinition = new Dictionary<string, Func<Item, IQualityManager>>();
-            qualityItemsDefinition.Add("Aged Brie", (x) => new AgedBrieQualityManager(x));
-            qualityItemsDefinition.Add("+5 Dexterity Vest", (x) => new StandardQuallityManager(x));
-            qualityItemsDefinition.Add("Sulfuras, Hand of Ragnaros", (x) => new SulfurasQualityManager(x));
-            qualityItemsDefinition.Add("Backstage passes to a TAFKAL80ETC concert", (x) => new BackStageQualityManager(x));
-            qualityItemsDefinition.Add("Elixir of the Mongoose", (x) => new StandardQuallityManager(x));
-            qualityItemsDefinition.Add("Conjured Mana Cake", (x) => new ConjuredQualityManager(x));
+            
+            var qualityItemsDefinition = new Dictionary<string, IQualityManager>();
+            qualityItemsDefinition.Add("Aged Brie",new AgedBrieQualityManager());
+            qualityItemsDefinition.Add("Sulfuras, Hand of Ragnaros", new SulfurasQualityManager());
+            qualityItemsDefinition.Add("Backstage passes to a TAFKAL80ETC concert", new BackStageQualityManager());
+            qualityItemsDefinition.Add("Conjured Mana Cake", new ConjuredQualityManager());
             
             IList<Item> Items = new List<Item>{
                 new Item {Name = "+5 Dexterity Vest", SellIn = 10, Quality = 20},
@@ -50,7 +48,7 @@ namespace GlidedRose.Cl
                 new Item {Name = "Conjured Mana Cake", SellIn = 3, Quality = 6}
             };
 
-            var app = new gr.GildedRose(Items, qualityItemsDefinition);
+            var app = new gr.GildedRose(Items, qualityItemsDefinition, new StandardQuallityManager());
 
             int days = 30;
             if (args.Length > 0)

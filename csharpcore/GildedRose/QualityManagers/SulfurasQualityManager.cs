@@ -10,14 +10,11 @@ namespace GildedRose.QualityManagers
 {
     public class SulfurasQualityManager : QualityManagerBase
     {
-        public SulfurasQualityManager(Item item) : base(item)
-        {
-
-        }
         protected override int UpdateSellInMargin { get; set; } = 0;
-        public override void UpdateQuality()
+        public override void UpdateQuality(Item item)
         {
-            UpdateWithMargings();
+            MaxQuality = 80;
+            UpdateWithMargings(item);
         }
     }
 }

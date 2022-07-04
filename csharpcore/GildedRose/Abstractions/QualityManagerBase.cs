@@ -1,45 +1,38 @@
 ﻿using GildedRoseKata;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GildedRose.Abstractions
 {
     public abstract class QualityManagerBase : IQualityManager
     {
-        protected Item Item { get; }
-        protected QualityManagerBase(Item item)
-        {
-            Item = item;
-        }
         protected virtual int UpdateQualityMargin { get; set; } = 0;
-        protected virtual int UpdateSellInMargin { get; set; } = 1;
+        protected virtual int UpdateSellInMargin { get; set; } = -1;
         protected virtual int MaxQuality { get; set; } = 50;
-        protected int Quality
+        public abstract void UpdateQuality(Item item);
+        protected void UpdateWithMargings(Item item)
         {
-            get
+            if (item == null)
             {
-                return Item.Quality;
+                throw new ArgumentNullException(nameof(item));
             }
-            set
+            var nextQuality = item.Quality + UpdateQualityMargin;
+            if (nextQuality >= 0 && nextQuality <= MaxQuality)
             {
-                if (value <= MaxQuality && value >= 0)
+                item.Quality += UpdateQualityMargin;
+            }
+            else
+            {
+                if (nextQuality <= 0)
                 {
-                    Item.Quality = value;
+                    item.Quality = 0;
                 }
                 else
                 {
-                    Item.Quality = 0;
+                    item.Quality = MaxQuality;
                 }
             }
-        }
-        public abstract void UpdateQuality();
-        protected void UpdateWithMargings()
-        {
-            Quality += UpdateQualityMargin;
-            Item.SellIn -= UpdateSellInMargin;
+            item.SellIn += UpdateSellInMargin;
+
         }
     }
 

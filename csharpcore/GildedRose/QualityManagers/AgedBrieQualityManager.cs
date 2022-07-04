@@ -10,13 +10,9 @@ namespace GildedRose.QualityManagers
 {
     public class AgedBrieQualityManager : QualityManagerBase
     {
-        public AgedBrieQualityManager(Item item) : base(item)
+        public override void UpdateQuality(Item item)
         {
-
-        }
-        public override void UpdateQuality()
-        {
-            if (Item.SellIn > 0)
+            if (item.SellIn > 0)
             {
                 UpdateQualityMargin = 1;
             }
@@ -24,7 +20,7 @@ namespace GildedRose.QualityManagers
             {
                 UpdateQualityMargin = 2;
             }
-            UpdateWithMargings();
+            UpdateWithMargings(item);
         }
     }
 }

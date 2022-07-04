@@ -10,29 +10,26 @@ namespace GildedRose.QualityManagers
 {
     public class BackStageQualityManager : QualityManagerBase
     {
-        public BackStageQualityManager(Item item) : base(item)
+        public override void UpdateQuality(Item item)
         {
-
-        }
-        public override void UpdateQuality()
-        {
-            if (Item.SellIn > 10)
+            if (item.SellIn > 10)
             {
                 UpdateQualityMargin = 1;
             }
-            else if(Item.SellIn <= 10 && Item.SellIn > 5)
+            else if(item.SellIn <= 10 && item.SellIn > 5)
             {
                 UpdateQualityMargin = 2;
             }
-            else if (Item.SellIn <= 5 && Item.SellIn > 0)
+            else if (item.SellIn <= 5 && item.SellIn > 0)
             {
                 UpdateQualityMargin = 3;
             }
             else
             {
-                Item.Quality = 0;
+                item.Quality = 0;
+                UpdateQualityMargin = 0;
             }
-            UpdateWithMargings();
+            UpdateWithMargings(item);
         }
     }
 }

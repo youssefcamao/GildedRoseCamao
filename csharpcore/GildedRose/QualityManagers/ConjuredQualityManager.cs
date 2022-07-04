@@ -10,13 +10,9 @@ namespace GildedRose.QualityManagers
 {
     public class ConjuredQualityManager : QualityManagerBase
     {
-        public ConjuredQualityManager(Item item) : base(item)
+        public override void UpdateQuality(Item item)
         {
-
-        }
-        public override void UpdateQuality()
-        {
-            if (Item.SellIn >= 0)
+            if (item.SellIn >= 0)
             {
                 UpdateQualityMargin = -2;
             }
@@ -24,7 +20,7 @@ namespace GildedRose.QualityManagers
             {
                 UpdateQualityMargin = -4;
             }
-            UpdateWithMargings();
+            UpdateWithMargings(item);
         }
     }
 }
