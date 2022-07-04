@@ -18,7 +18,6 @@ namespace GildedRoseTests
         private void InitializeQualityItemsDefinition()
         {
             _qualityItemsDefinition.Add("Aged Brie", new AgedBrieQualityManager());
-            _qualityItemsDefinition.Add("+5 Dexterity Vest", new StandardQuallityManager());
             _qualityItemsDefinition.Add("Sulfuras, Hand of Ragnaros", new SulfurasQualityManager());
             _qualityItemsDefinition.Add("Backstage passes to a TAFKAL80ETC concert", new BackStageQualityManager());
             _qualityItemsDefinition.Add("Conjured Mana Cake", new ConjuredQualityManager());
@@ -105,6 +104,12 @@ namespace GildedRoseTests
                     Name = "Backstage passes to a TAFKAL80ETC concert",
                     SellIn = 0,
                     Quality = 22
+                },
+                new Item
+                {
+                    Name = "Backstage passes to a TAFKAL80ETC concert",
+                    SellIn = 10,
+                    Quality = 50
                 }};
             var app = new gr.GildedRose(Items, _qualityItemsDefinition, new StandardQuallityManager());
             app.UpdateQuality();
@@ -115,11 +120,12 @@ namespace GildedRoseTests
             // Increase by 2
             Assert.Equal(47, Items[1].Quality);
             Assert.Equal(9, Items[1].SellIn);
-
             // Increase by 3
             Assert.Equal(48, Items[2].Quality);
             Assert.Equal(4, Items[2].SellIn);
-
+            //Keeps the same quality
+            Assert.Equal(50, Items[4].Quality);
+            Assert.Equal(9, Items[4].SellIn);
             // Drop to 0
             Assert.Equal(0, Items[3].Quality);
             Assert.Equal(-1, Items[3].SellIn);
