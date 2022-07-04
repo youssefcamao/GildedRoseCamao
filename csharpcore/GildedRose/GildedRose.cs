@@ -1,9 +1,7 @@
 ﻿using GildedRose.Abstractions;
-using System;
 using System.Collections.Generic;
-using System.Data;
 
-namespace GildedRoseKata
+namespace GildedRose
 {
     public class GildedRose
     {

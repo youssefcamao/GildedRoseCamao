@@ -1,10 +1,4 @@
 ﻿using GildedRose.Abstractions;
-using GildedRoseKata;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GildedRose.QualityManagers
 {
@@ -16,7 +10,7 @@ namespace GildedRose.QualityManagers
             {
                 UpdateQualityMargin = 1;
             }
-            else if(item.SellIn <= 10 && item.SellIn > 5)
+            else if (item.SellIn <= 10 && item.SellIn > 5)
             {
                 UpdateQualityMargin = 2;
             }

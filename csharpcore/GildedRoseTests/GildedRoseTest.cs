@@ -1,10 +1,9 @@
-﻿using Xunit;
-using System.Collections.Generic;
-using gr = GildedRoseKata;
-using GildedRoseKata;
+﻿using GildedRose;
 using GildedRose.Abstractions;
-using System;
 using GildedRose.QualityManagers;
+using System.Collections.Generic;
+using Xunit;
+using gr = GildedRose;
 
 namespace GildedRoseTests
 {
@@ -25,7 +24,7 @@ namespace GildedRoseTests
         [Fact]
         public void GildedRose_QualityNotNegative_Successful()
         {
-            IList<Item> Items = new List<Item> { new Item {Name = "+5 Dexterity Vest", SellIn = 10, Quality = 0}};
+            IList<Item> Items = new List<Item> { new Item { Name = "+5 Dexterity Vest", SellIn = 10, Quality = 0 } };
             var app = new gr.GildedRose(Items, _qualityItemsDefinition, new StandardQuallityManager());
             app.UpdateQuality();
             Assert.Equal(0, Items[0].Quality);
@@ -50,7 +49,7 @@ namespace GildedRoseTests
         [Fact]
         public void GildedRose_NormalCase_Decrease_Successful()
         {
-            IList<Item> Items = new List<Item> {new Item { Name = "+5 Dexterity Vest", SellIn = 10, Quality = 12 }};
+            IList<Item> Items = new List<Item> { new Item { Name = "+5 Dexterity Vest", SellIn = 10, Quality = 12 } };
             var app = new gr.GildedRose(Items, _qualityItemsDefinition, new StandardQuallityManager());
             app.UpdateQuality();
             Assert.Equal(9, Items[0].SellIn);
@@ -80,7 +79,7 @@ namespace GildedRoseTests
         [Fact]
         public void GildedRose_BackStagePasses_UpdateQuality_Successful()
         {
-            IList<Item> Items = new List<Item> 
+            IList<Item> Items = new List<Item>
             { new Item
                 {
                     Name = "Backstage passes to a TAFKAL80ETC concert",

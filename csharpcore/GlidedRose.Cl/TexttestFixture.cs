@@ -1,10 +1,9 @@
-﻿
-using GildedRoseKata;
-using gr = GildedRoseKata;
-using System;
-using System.Collections.Generic;
+﻿using GildedRose;
 using GildedRose.Abstractions;
 using GildedRose.QualityManagers;
+using System;
+using System.Collections.Generic;
+using gr = GildedRose;
 
 namespace GlidedRose.Cl
 {
@@ -13,13 +12,13 @@ namespace GlidedRose.Cl
         public static void Main(string[] args)
         {
             Console.WriteLine("OMGHAI!");
-            
+
             var qualityItemsDefinition = new Dictionary<string, IQualityManager>();
-            qualityItemsDefinition.Add("Aged Brie",new AgedBrieQualityManager());
+            qualityItemsDefinition.Add("Aged Brie", new AgedBrieQualityManager());
             qualityItemsDefinition.Add("Sulfuras, Hand of Ragnaros", new SulfurasQualityManager());
             qualityItemsDefinition.Add("Backstage passes to a TAFKAL80ETC concert", new BackStageQualityManager());
             qualityItemsDefinition.Add("Conjured Mana Cake", new ConjuredQualityManager());
-            
+
             IList<Item> Items = new List<Item>{
                 new Item {Name = "+5 Dexterity Vest", SellIn = 10, Quality = 20},
                 new Item {Name = "Aged Brie", SellIn = 2, Quality = 0},
