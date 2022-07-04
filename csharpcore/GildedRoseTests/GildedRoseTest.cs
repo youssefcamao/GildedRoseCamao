@@ -133,11 +133,15 @@ namespace GildedRoseTests
         [Fact]
         public void GildedRose_Conjured_DoubleDecrease_Successful()
         {
-            IList<Item> Items = new List<Item> { new Item { Name = "Conjured Mana Cake", SellIn = 3, Quality = 6 } };
+            IList<Item> Items = new List<Item> { new Item { Name = "Conjured Mana Cake", SellIn = 3, Quality = 6 },
+             new Item { Name = "Conjured Mana Cake", SellIn = 3, Quality = 1 }};
             var app = new gr.GildedRose(Items, _qualityItemsDefinition, new StandardQuallityManager());
             app.UpdateQuality();
             Assert.Equal(2, Items[0].SellIn);
             Assert.Equal(4, Items[0].Quality);
+            //check if quality is not negative
+            Assert.Equal(2, Items[1].SellIn);
+            Assert.Equal(0, Items[1].Quality);
         }
     }
 }
