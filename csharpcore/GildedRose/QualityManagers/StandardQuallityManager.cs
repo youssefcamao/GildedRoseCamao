@@ -6,7 +6,7 @@ namespace GildedRose.QualityManagers
     {
         public override void UpdateQuality(Item item)
         {
-            if (item.SellIn >= 0)
+            if (item.SellIn > 0)
             {
                 UpdateQualityMargin = -1;
             }

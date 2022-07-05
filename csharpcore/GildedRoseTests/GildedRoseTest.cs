@@ -49,11 +49,14 @@ namespace GildedRoseTests
         [Fact]
         public void GildedRose_NormalCase_Decrease_Successful()
         {
-            IList<Item> Items = new List<Item> { new Item { Name = "+5 Dexterity Vest", SellIn = 10, Quality = 12 } };
+            IList<Item> Items = new List<Item> { new Item { Name = "+5 Dexterity Vest", SellIn = 10, Quality = 12 },
+            new Item { Name = "+5 Dexterity Vest", SellIn = 0, Quality = 12 }};
             var app = new gr.GildedRose(Items, _qualityItemsDefinition, new StandardQuallityManager());
             app.UpdateQuality();
             Assert.Equal(9, Items[0].SellIn);
             Assert.Equal(11, Items[0].Quality);
+            Assert.Equal(-1, Items[1].SellIn);
+            Assert.Equal(10, Items[1].Quality);
         }
         [Fact]
         public void GildedRose_NormalCaseIfSealInExpired_DoubleDecrease_Successful()
