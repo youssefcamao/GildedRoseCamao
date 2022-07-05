@@ -1,9 +1,7 @@
-﻿using GildedRose;
-using GildedRose.Abstractions;
+﻿using GildedRose.Abstractions;
 using GildedRose.QualityManagers;
 using System;
 using System.Collections.Generic;
-using gr = GildedRose;
 
 namespace GildedRose.Cl
 {
@@ -47,7 +45,7 @@ namespace GildedRose.Cl
                 new Item {Name = "Conjured Mana Cake", SellIn = 3, Quality = 6}
             };
 
-            var app = new gr.GildedRose(Items, qualityItemsDefinition, new StandardQuallityManager());
+            var app = new GildedRose(Items, qualityItemsDefinition, new StandardQuallityManager());
 
             int days = 30;
             if (args.Length > 0)

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace GildedRose.Abstractions
+﻿namespace GildedRose.Abstractions
 {
     public abstract class QualityManagerBase : IQualityManager
     {
