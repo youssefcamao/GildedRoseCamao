@@ -1,6 +1,7 @@
 ﻿using GildedRose;
 using GildedRose.Abstractions;
 using GildedRose.QualityManagers;
+using System;
 using System.Collections.Generic;
 using Xunit;
 using gr = GildedRose;
@@ -40,11 +41,14 @@ namespace GildedRoseTests
         [Fact]
         public void GildedRose_AgedBrie_Increase_Successful()
         {
-            IList<Item> Items = new List<Item> { new Item { Name = "Aged Brie", SellIn = 2, Quality = 20 } };
+            IList<Item> Items = new List<Item> { new Item { Name = "Aged Brie", SellIn = 2, Quality = 20 },
+            new Item { Name = "Aged Brie", SellIn = 0, Quality = 20 }};
             var app = new gr.GildedRose(Items, _qualityItemsDefinition, new StandardQuallityManager());
             app.UpdateQuality();
             Assert.Equal(1, Items[0].SellIn);
             Assert.Equal(21, Items[0].Quality);
+            Assert.Equal(-1, Items[1].SellIn);
+            Assert.Equal(22, Items[1].Quality);
         }
         [Fact]
         public void GildedRose_NormalCase_Decrease_Successful()
@@ -136,7 +140,8 @@ namespace GildedRoseTests
         public void GildedRose_Conjured_DoubleDecrease_Successful()
         {
             IList<Item> Items = new List<Item> { new Item { Name = "Conjured Mana Cake", SellIn = 3, Quality = 6 },
-             new Item { Name = "Conjured Mana Cake", SellIn = 3, Quality = 1 }};
+             new Item { Name = "Conjured Mana Cake", SellIn = 3, Quality = 1 },
+            new Item { Name = "Conjured Mana Cake", SellIn = 0, Quality = 10 }};
             var app = new gr.GildedRose(Items, _qualityItemsDefinition, new StandardQuallityManager());
             app.UpdateQuality();
             Assert.Equal(2, Items[0].SellIn);
@@ -144,6 +149,24 @@ namespace GildedRoseTests
             //check if quality is not negative
             Assert.Equal(2, Items[1].SellIn);
             Assert.Equal(0, Items[1].Quality);
+            // check if it gets decreased by 4 after sell in date
+            Assert.Equal(-1, Items[2].SellIn);
+            Assert.Equal(6, Items[2].Quality);
+        }
+        [Fact]
+        public void GildedRose_ShouldThrow_ArgumentNullException_Successful()
+        {
+            var sulfurasQualityManager = new SulfurasQualityManager();
+            var agedBrieQualityManager = new AgedBrieQualityManager();
+            var backStageQualityManager = new BackStageQualityManager();
+            var conjuredQualityManager = new ConjuredQualityManager();
+            var standardQualityManager = new StandardQuallityManager();
+
+            Assert.Throws<ArgumentNullException>(() => sulfurasQualityManager.UpdateQuality(null));
+            Assert.Throws<ArgumentNullException>(() => agedBrieQualityManager.UpdateQuality(null));
+            Assert.Throws<ArgumentNullException>(() => backStageQualityManager.UpdateQuality(null));
+            Assert.Throws<ArgumentNullException>(() => conjuredQualityManager.UpdateQuality(null));
+            Assert.Throws<ArgumentNullException>(() => standardQualityManager.UpdateQuality(null));
         }
     }
 }

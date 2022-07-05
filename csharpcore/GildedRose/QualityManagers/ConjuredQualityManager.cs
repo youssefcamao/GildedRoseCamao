@@ -1,4 +1,5 @@
 ﻿using GildedRose.Abstractions;
+using System;
 
 namespace GildedRose.QualityManagers
 {
@@ -6,15 +7,20 @@ namespace GildedRose.QualityManagers
     {
         public override void UpdateQuality(Item item)
         {
-            if (item.SellIn >= 0)
+            if (item == null)
             {
-                UpdateQualityMargin = -2;
+                throw new ArgumentNullException(nameof(item));
+            }
+            int updateMargin;
+            if (item.SellIn > 0)
+            {
+                updateMargin = -2;
             }
             else
             {
-                UpdateQualityMargin = -4;
+                updateMargin = -4;
             }
-            UpdateWithMargings(item);
+            UpdateWithMargins(item, updateMargin);
         }
     }
 }

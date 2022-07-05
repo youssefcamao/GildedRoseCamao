@@ -4,20 +4,14 @@ namespace GildedRose.Abstractions
 {
     public abstract class QualityManagerBase : IQualityManager
     {
-        protected virtual int UpdateQualityMargin { get; set; } = 0;
-        protected virtual int UpdateSellInMargin { get; set; } = -1;
-        protected virtual int MaxQuality { get; set; } = 50;
+        protected virtual int MaxQuality { get; } = 50;
         public abstract void UpdateQuality(Item item);
-        protected void UpdateWithMargings(Item item)
+        protected void UpdateWithMargins(Item item, int qualityMargin, int sellInMargin = -1)
         {
-            if (item == null)
-            {
-                throw new ArgumentNullException(nameof(item));
-            }
-            var nextQuality = item.Quality + UpdateQualityMargin;
+            var nextQuality = item.Quality + qualityMargin;
             if (nextQuality >= 0 && nextQuality <= MaxQuality)
             {
-                item.Quality += UpdateQualityMargin;
+                item.Quality += qualityMargin;
             }
             else
             {
@@ -30,7 +24,7 @@ namespace GildedRose.Abstractions
                     item.Quality = MaxQuality;
                 }
             }
-            item.SellIn += UpdateSellInMargin;
+            item.SellIn += sellInMargin;
 
         }
     }

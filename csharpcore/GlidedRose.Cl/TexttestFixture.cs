@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using gr = GildedRose;
 
-namespace GlidedRose.Cl
+namespace GildedRose.Cl
 {
     public static class TexttestFixture
     {
